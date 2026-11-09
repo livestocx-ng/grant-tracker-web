@@ -1,0 +1,70 @@
+@import 'tailwindcss';
+
+:root {
+  --ink: #0c1419;
+  --ink-soft: #1a2a33;
+  --mist: #e8f0f2;
+  --mist-muted: #c5d5db;
+  --teal: #0f6b63;
+  --teal-deep: #0a4540;
+  --teal-glow: #1a9a8f;
+  --surface: rgba(255, 255, 255, 0.78);
+  --surface-border: rgba(15, 107, 99, 0.16);
+  --danger: #b42318;
+  --font-display: 'Bricolage Grotesque', sans-serif;
+  --font-body: 'Manrope', sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: var(--mist);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(2%, -3%, 0) scale(1.04);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-fade-up-delay {
+  animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
+}
+
+.bg-orb {
+  animation: drift 16s ease-in-out infinite;
+}

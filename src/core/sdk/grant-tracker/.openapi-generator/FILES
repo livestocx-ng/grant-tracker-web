@@ -1,0 +1,14 @@
+.gitignore
+.npmignore
+api.ts
+base.ts
+common.ts
+configuration.ts
+docs/AccountInfo.md
+docs/AddGrantApplicationDto.md
+docs/GrantApi.md
+docs/GrantApplicationAssigneeInfo.md
+docs/GrantApplicationInfo.md
+docs/UpdateGrantApplicationDto.md
+git_push.sh
+index.ts

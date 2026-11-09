@@ -1,0 +1,15 @@
+.gitignore
+.npmignore
+api.ts
+base.ts
+common.ts
+configuration.ts
+docs/AuthAdminApi.md
+docs/AuthApi.md
+docs/AvailabilityCheckInfo.md
+docs/CreateUserAccountDto.md
+docs/HelpersApi.md
+docs/SigninDTO.md
+docs/SigninResponsePayload.md
+git_push.sh
+index.ts
