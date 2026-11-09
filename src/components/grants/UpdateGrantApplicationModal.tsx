@@ -13,6 +13,11 @@ type UpdateGrantApplicationModalProps = {
   grant: GrantApplicationInfo | null
 }
 
+type UpdateGrantFormValues = {
+  applicationUrl: string
+  deadline: string
+}
+
 function toDateTimeLocalValue(value?: string) {
   if (!value) {
     return ''
@@ -42,14 +47,12 @@ export function UpdateGrantApplicationModal({
 }: UpdateGrantApplicationModalProps) {
   const { isPending, mutate } = useUpdateGrantApplicationMutation()
 
-  const form = useForm<UpdateGrantApplicationDto>({
+  const form = useForm<UpdateGrantFormValues>({
     initialValues: {
-      name: '',
       applicationUrl: '',
       deadline: '',
     },
     validate: {
-      name: (value) => (value.trim() ? null : 'Name is required'),
       applicationUrl: (value) => {
         if (!value.trim()) {
           return 'Application URL is required'
@@ -61,7 +64,6 @@ export function UpdateGrantApplicationModal({
           return 'Enter a valid URL'
         }
       },
-      deadline: (value) => (value ? null : 'Deadline is required'),
     },
   })
 
@@ -71,7 +73,6 @@ export function UpdateGrantApplicationModal({
     }
 
     form.setValues({
-      name: grant.name ?? '',
       applicationUrl: grant.applicationUrl ?? '',
       deadline: toDateTimeLocalValue(grant.deadline),
     })
@@ -79,19 +80,22 @@ export function UpdateGrantApplicationModal({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [grant?.id, opened])
 
-  function handleSubmit(values: UpdateGrantApplicationDto) {
+  function handleSubmit(values: UpdateGrantFormValues) {
     if (!grant) {
       return
+    }
+
+    const payload: UpdateGrantApplicationDto = {
+      applicationUrl: values.applicationUrl.trim(),
+      ...(values.deadline
+        ? { deadline: toIsoDeadline(values.deadline) }
+        : {}),
     }
 
     mutate(
       {
         grantApplicationId: Number(grant.id),
-        values: {
-          name: values.name.trim(),
-          applicationUrl: values.applicationUrl.trim(),
-          deadline: toIsoDeadline(values.deadline),
-        },
+        values: payload,
       },
       {
         onSuccess: () => onClose(),
@@ -112,13 +116,6 @@ export function UpdateGrantApplicationModal({
         <Stack gap="md">
           <TextInput
             size="md"
-            label="Name"
-            placeholder="Grant name"
-            disabled={isPending}
-            {...form.getInputProps('name')}
-          />
-          <TextInput
-            size="md"
             label="Application URL"
             placeholder="https://..."
             disabled={isPending}
@@ -127,7 +124,7 @@ export function UpdateGrantApplicationModal({
           <TextInput
             size="md"
             type="datetime-local"
-            label="Deadline"
+            label="Deadline (optional)"
             disabled={isPending}
             {...form.getInputProps('deadline')}
           />

@@ -36,15 +36,15 @@ export interface AddGrantApplicationDto {
     /**
      * The name of the grant application
      */
-    'name': string;
+    'name'?: string;
     /**
-     * The description of the grant application
+     * The URL of the grant application
      */
     'applicationUrl': string;
     /**
      * The deadline of the grant application
      */
-    'deadline': string;
+    'deadline'?: string;
     /**
      * The assignees of the grant application
      */
@@ -64,7 +64,7 @@ export interface GrantApplicationInfo {
     'id': string;
     'name': string;
     'applicationUrl': string;
-    'deadline': string;
+    'deadline'?: string;
     'author': AccountInfo;
     'status': GrantApplicationInfoStatusEnum;
     'dateAdded': string;
@@ -85,17 +85,13 @@ export type GrantApplicationInfoStatusEnum = typeof GrantApplicationInfoStatusEn
 
 export interface UpdateGrantApplicationDto {
     /**
-     * The name of the grant application
-     */
-    'name': string;
-    /**
      * The URL of the grant application
      */
     'applicationUrl': string;
     /**
      * The deadline of the grant application
      */
-    'deadline': string;
+    'deadline'?: string;
 }
 
 /**

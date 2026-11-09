@@ -20,7 +20,6 @@ type AddGrantApplicationModalProps = {
 }
 
 type AddGrantFormValues = {
-  name: string
   applicationUrl: string
   deadline: string
   assignees: string[]
@@ -49,13 +48,11 @@ export function AddGrantApplicationModal({
 
   const form = useForm<AddGrantFormValues>({
     initialValues: {
-      name: '',
       applicationUrl: '',
       deadline: '',
       assignees: [],
     },
     validate: {
-      name: (value) => (value.trim() ? null : 'Name is required'),
       applicationUrl: (value) => {
         if (!value.trim()) {
           return 'Application URL is required'
@@ -67,7 +64,6 @@ export function AddGrantApplicationModal({
           return 'Enter a valid URL'
         }
       },
-      deadline: (value) => (value ? null : 'Deadline is required'),
     },
   })
 
@@ -91,9 +87,10 @@ export function AddGrantApplicationModal({
 
   function handleSubmit(values: AddGrantFormValues) {
     const payload = {
-      name: values.name.trim(),
       applicationUrl: values.applicationUrl.trim(),
-      deadline: toIsoDeadline(values.deadline),
+      ...(values.deadline
+        ? { deadline: toIsoDeadline(values.deadline) }
+        : {}),
       // API validates assignees as numbers; MultiSelect stores string values
       assignees: values.assignees.map((id) => Number(id)),
       assignToSelf: false,
@@ -117,13 +114,6 @@ export function AddGrantApplicationModal({
         <Stack gap="md">
           <TextInput
             size="md"
-            label="Name"
-            placeholder="Grant name"
-            disabled={isPending}
-            {...form.getInputProps('name')}
-          />
-          <TextInput
-            size="md"
             label="Application URL"
             placeholder="https://..."
             disabled={isPending}
@@ -132,7 +122,7 @@ export function AddGrantApplicationModal({
           <TextInput
             size="md"
             type="datetime-local"
-            label="Deadline"
+            label="Deadline (optional)"
             disabled={isPending}
             {...form.getInputProps('deadline')}
           />
@@ -140,7 +130,7 @@ export function AddGrantApplicationModal({
           <Stack gap={6}>
             <Group gap={8} justify="space-between">
               <Text size="sm" fw={500}>
-                Assignees
+                Assignees (optional)
               </Text>
               {isFetchingAssignees ? <Loader size={14} color="teal" /> : null}
             </Group>
@@ -169,15 +159,13 @@ export function AddGrantApplicationModal({
           </Stack>
 
           <Group justify="flex-end" mt="sm">
-            {/* <Button
+            <Button
               size="md"
-              variant="default"
-              onClick={onClose}
-              disabled={isPending}
+              color="teal"
+              type="submit"
+              w="100%"
+              loading={isPending}
             >
-              Cancel
-            </Button> */}
-            <Button size="md" color="teal" type="submit" w="100%" loading={isPending}>
               Submit
             </Button>
           </Group>

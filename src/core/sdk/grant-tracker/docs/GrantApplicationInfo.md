@@ -8,7 +8,7 @@ Name | Type | Description | Notes
 **id** | **string** |  | [default to undefined]
 **name** | **string** |  | [default to undefined]
 **applicationUrl** | **string** |  | [default to undefined]
-**deadline** | **string** |  | [default to undefined]
+**deadline** | **string** |  | [optional] [default to undefined]
 **author** | [**AccountInfo**](AccountInfo.md) |  | [default to undefined]
 **status** | **string** |  | [default to undefined]
 **dateAdded** | **string** |  | [default to undefined]
