@@ -15,7 +15,7 @@ export default function useRemoveGrantApplicationAssigneesMutation() {
 
       const { data } =
         await grantApi.grantControllerRemoveGrantApplicationAssignees(
-          payload.assigneeIds,
+          payload.assigneeIds.join(','),
           payload.grantApplicationId,
         )
 

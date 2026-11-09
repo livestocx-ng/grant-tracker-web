@@ -1,9 +1,6 @@
 import {useEffect, useState} from 'react';
 import {
 	ActionIcon,
-	Anchor,
-	Avatar,
-	Badge,
 	Box,
 	Button,
 	Divider,
@@ -24,8 +21,6 @@ import {useDisclosure} from '@mantine/hooks';
 import {
 	IconCalendarDue,
 	IconCalendarPlus,
-	IconExternalLink,
-	IconLink,
 	IconTrash,
 	IconUserMinus,
 	IconUserPlus,
